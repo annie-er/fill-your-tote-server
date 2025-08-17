@@ -1,2 +1,2 @@
 # fill-your-tote
-Fill your tote!'s online shop
+Built with React and Spring Boot
