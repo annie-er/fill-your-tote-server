@@ -17,6 +17,7 @@ public class DrawingRestController {
         this.service = service;
     }
 
+    // also read-only methods
     @GetMapping
     public List<Drawing> getDrawings() {
         return service.findAllDrawings();

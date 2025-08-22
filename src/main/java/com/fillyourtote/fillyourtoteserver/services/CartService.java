@@ -13,7 +13,7 @@ import java.util.Optional;
 @Transactional
 public class CartService {
     private final CartItemRepository cartItemRepository;
-    private final ProductService productService;
+    private final ProductService productService; // depends on product service
 
     public CartService(CartItemRepository cartItemRepository, ProductService productService) {
         this.cartItemRepository = cartItemRepository;

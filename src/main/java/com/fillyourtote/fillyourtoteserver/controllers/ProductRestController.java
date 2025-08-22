@@ -17,6 +17,7 @@ public class ProductRestController {
         this.service = service;
     }
 
+    // contain read-only methods
     @GetMapping
     public List<Product> getProducts() {
         return service.findAllProducts();

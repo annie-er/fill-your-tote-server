@@ -15,9 +15,4 @@ public class FillYourToteServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(FillYourToteServerApplication.class, args);
     }
-
-    public CommandLineRunner initializeDatabase(ProductService service) {
-        return args -> service.initializeDatabase();
-    }
-
 }
