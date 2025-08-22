@@ -27,4 +27,9 @@ public class ProductService {
     public Optional<Product> findProductById(Long id) {
         return productRepository.findById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<Product> findProductBySlug(String slug) {
+        return productRepository.findBySlug(slug);
+    }
 }

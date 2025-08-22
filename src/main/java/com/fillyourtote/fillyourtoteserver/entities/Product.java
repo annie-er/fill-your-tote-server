@@ -19,6 +19,9 @@ public class Product {
     @NotBlank(message = "Name is required")
     private String name;
 
+    @Column(unique = true, nullable = false)
+    private String slug;
+
     @Column(length = 500)
     private String description;
 
@@ -32,13 +35,14 @@ public class Product {
 
     }
 
-    public Product(String name, String description, String imageUrl, BigDecimal price) {
-        this(null, name, description, imageUrl, price);
+    public Product(String name, String slug, String description, String imageUrl, BigDecimal price) {
+        this(null, name, slug, description, imageUrl, price);
     }
 
-    public Product(Long id, String name, String description, String imageUrl, BigDecimal price) {
+    public Product(Long id, String name, String slug, String description, String imageUrl, BigDecimal price) {
         this.id = id;
         this.name = name;
+        this.slug = slug;
         this.description = description;
         this.imageUrl = imageUrl;
         this.price = price;
@@ -59,6 +63,10 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getSlug() { return slug; }
+
+    public void setSlug(String slug) { this.slug = slug; }
 
     public String getDescription() {
         return description;
@@ -90,6 +98,7 @@ public class Product {
         Product product = (Product) o;
         return Objects.equals(id, product.id) &&
                 Objects.equals(name, product.name) &&
+                Objects.equals(slug, product.slug) &&
                 Objects.equals(description, product.description) &&
                 Objects.equals(imageUrl, product.imageUrl) &&
                 Objects.equals(price, product.price);
@@ -97,7 +106,7 @@ public class Product {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, imageUrl, price);
+        return Objects.hash(id, name, slug, description, imageUrl, price);
     }
 
     @Override
@@ -105,6 +114,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", slug='" + slug + '\'' +
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", price=" + price +

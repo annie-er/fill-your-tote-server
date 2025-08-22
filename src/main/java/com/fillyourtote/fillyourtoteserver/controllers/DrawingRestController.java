@@ -23,8 +23,13 @@ public class DrawingRestController {
         return service.findAllDrawings();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Drawing> getDrawing(@PathVariable Long id) {
-        return ResponseEntity.of(service.findDrawingById(id));
+    @GetMapping("/{identifier}")
+    public ResponseEntity<Drawing> getDrawing(@PathVariable String identifier) {
+        try {
+            Long id = Long.parseLong(identifier);
+            return ResponseEntity.of(service.findDrawingById(id));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.of(service.findDrawingBySlug(identifier));
+        }
     }
 }

@@ -26,4 +26,9 @@ public class DrawingService {
     public Optional<Drawing> findDrawingById(Long id) {
         return drawingRepository.findById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<Drawing> findDrawingBySlug(String slug) {
+        return drawingRepository.findBySlug(slug);
+    }
 }

@@ -17,6 +17,9 @@ public class Drawing {
     @NotBlank(message = "Name is required")
     private String name;
 
+    @Column(unique = true, nullable = false)
+    private String slug;
+
     @Column(length = 500)
     private String description;
 
@@ -25,8 +28,9 @@ public class Drawing {
 
     public Drawing() {}
 
-    public Drawing(String name, String description, String imageUrl) {
+    public Drawing(String name, String slug, String description, String imageUrl) {
         this.name = name;
+        this.slug = slug;
         this.description = description;
         this.imageUrl = imageUrl;
     }
@@ -46,6 +50,10 @@ public class Drawing {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getSlug() { return slug; }
+
+    public void setSlug(String slug) { this.slug = slug; }
 
     public String getDescription() {
         return description;
@@ -67,12 +75,16 @@ public class Drawing {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Drawing drawing = (Drawing) o;
-        return Objects.equals(id, drawing.id);
+        return Objects.equals(id, drawing.id) &&
+                Objects.equals(name, drawing.name) &&
+                Objects.equals(slug, drawing.slug) &&
+                Objects.equals(description, drawing.description) &&
+                Objects.equals(imageUrl, drawing.imageUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, slug, description, imageUrl);
     }
 
     @Override
@@ -80,6 +92,7 @@ public class Drawing {
         return "Drawing{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", slug='" + slug + '\'' +
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 '}';

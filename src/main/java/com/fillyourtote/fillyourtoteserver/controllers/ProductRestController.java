@@ -23,8 +23,13 @@ public class ProductRestController {
         return service.findAllProducts();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        return ResponseEntity.of(service.findProductById(id));
+    @GetMapping("/{identifier}")
+    public ResponseEntity<Product> getProduct(@PathVariable String identifier) {
+        try {
+            Long id = Long.parseLong(identifier);
+            return ResponseEntity.of(service.findProductById(id));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.of(service.findProductBySlug(identifier));
+        }
     }
 }
