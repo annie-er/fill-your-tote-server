@@ -21,7 +21,17 @@ public class DrawingRestController {
     // also read-only methods
     @GetMapping
     public List<Drawing> getDrawings() {
-        return service.findAllDrawings();
+        System.out.println("=== CONTROLLER START ===");
+        List<Drawing> drawings = service.findAllDrawings();
+
+        System.out.println("=== CONTROLLER RECEIVED " + drawings.size() + " DRAWINGS ===");
+        drawings.forEach(d ->
+                System.out.println("Controller sees: ID=" + d.getId() + ", Name='" + d.getName() + "', Slug='" + d.getSlug() + "'")
+        );
+        System.out.println("=== CONTROLLER END ===");
+
+        return drawings;
+//        return service.findAllDrawings();
     }
 
     @GetMapping("/{identifier}")
