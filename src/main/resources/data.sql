@@ -47,10 +47,8 @@ INSERT INTO product (name, slug, description, image_url, price)
 SELECT 'Grasping Roses', 'grasping-roses', 'Personal illustration about beauty standards.', '/tote/rose-hand.jpeg', 13.50
     WHERE NOT EXISTS (SELECT 1 FROM product WHERE slug = 'grasping-roses');
 
--- drawing
-INSERT INTO drawing (name, slug, description, image_url)
-SELECT 'Cats On a Roll!', 'cats-on-a-roll','Crazy, fun cats.', '/drawing/cats-on-a-roll.png'
-    WHERE NOT EXISTS (SELECT 1 FROM drawing WHERE slug = 'cats-on-a-roll');
+--drawing
+DELETE FROM drawing;
 
 INSERT INTO drawing (name, slug, description, image_url)
 SELECT 'View From My Window', 'view-from-my-window', 'Looking through my window, I feel life''s wide and vast expanse.', '/drawing/window.png'
@@ -71,10 +69,6 @@ SELECT 'View Of My Classroom', 'view-of-my-classroom', 'Doodle done during the m
 INSERT INTO drawing (name, slug, description, image_url)
 SELECT 'My Roses', 'my-roses', 'Beauty standards, it destroys me.', '/drawing/grasp.png'
     WHERE NOT EXISTS (SELECT 1 FROM drawing WHERE slug = 'my-roses');
-
-INSERT INTO drawing (name, slug, description, image_url)
-SELECT 'The Great Surf!', 'the-great-surf', 'Watch!', '/drawing/great-surf.png'
-    WHERE NOT EXISTS (SELECT 1 FROM drawing WHERE slug = 'the-great-surf');
 
 INSERT INTO drawing (name, slug, description, image_url)
 SELECT 'Mom Chilling', 'mom-chilling', 'Mom chilling through the chaos of life.', '/drawing/mom-chillin.png'
