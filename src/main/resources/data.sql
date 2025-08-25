@@ -4,7 +4,7 @@ VALUES
     ('Always here', 'always-here', 'The perfect bag to bring with you on grocery runs.', '/tote/always-here.png', 22.99),
     ('Cat Cafe', 'cat-cafe', 'Enjoy the small moments.', '/tote/cat-cafe.jpeg', 22.99),
     ('Mer-cat', 'mer-cat', 'A reminder of the irony and futility of jealousy.', '/tote/cat-mermaid.jpeg', 13.50),
-    ('Cat Walk', 'cat-walk', 'Cat Walk!.', '/tote/cat-walk.jpg', 22.99),
+    ('Cat Walk', 'cat-walk', 'Cat Walk!', '/tote/cat-walk.jpg', 22.99),
     ('Connected to God', 'connected-to-god', 'Commissioned for The Church Assembly in Toronto''s summer camp. A reminder of God''s gentle presence in life.', '/tote/connected-to-god.jpeg', 13.50),
     ('Cool Cat Club', 'cool-cat-club', 'Cool cats only: brash driving... no scaredy cats allowed!', '/tote/cool-cat-club.jpg', 13.50),
     ('Furever', 'furever', 'Friendship rules.', '/tote/furever.jpg', 22.99),
