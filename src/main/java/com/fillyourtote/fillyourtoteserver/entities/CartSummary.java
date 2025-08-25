@@ -22,15 +22,16 @@ public class CartSummary {
     }
 
     private void calculateSummary(List<CartItem> cartItems) {
-        this.total = cartItems.stream()
+        this.subtotal = cartItems.stream()
                 .map(CartItem::getSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .setScale(2, RoundingMode.HALF_UP);
 
-        this.vatAmount = this.total.multiply(VAT_RATE)
-                .divide(BigDecimal.ONE.add(VAT_RATE), 2, RoundingMode.HALF_UP);
+        this.vatAmount = this.subtotal.multiply(VAT_RATE)
+                .setScale(2, RoundingMode.HALF_UP);
 
-        this.subtotal = this.total.subtract(this.vatAmount);
+        this.total = this.subtotal.add(this.vatAmount)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getSubtotal() {
