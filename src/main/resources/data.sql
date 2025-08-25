@@ -1,7 +1,7 @@
 -- Product seed data
 INSERT INTO product (name, slug, description, image_url, price)
 VALUES
-    ('Always here', 'always-here', 'The perfect bag to bring with you on grocery runs.', '/tote/always-here.jpg', 22.99),
+    ('Always here', 'always-here', 'The perfect bag to bring with you on grocery runs.', '/tote/always-here.png', 22.99),
     ('Cat Cafe', 'cat-cafe', 'Enjoy the small moments.', '/tote/cat-cafe.jpeg', 22.99),
     ('Mer-cat', 'mer-cat', 'A reminder of the irony and futility of jealousy.', '/tote/cat-mermaid.jpeg', 13.50),
     ('Cat Walk', 'cat-walk', 'Cat Walk!.', '/tote/cat-walk.jpg', 22.99),
