@@ -1,19 +1,22 @@
 package com.fillyourtote.fillyourtoteserver.services;
 
 import com.fillyourtote.fillyourtoteserver.entities.CartItem;
+import com.fillyourtote.fillyourtoteserver.entities.CartSummary;
 import com.fillyourtote.fillyourtoteserver.entities.Product;
+import com.fillyourtote.fillyourtoteserver.dto.CartItemDTO;
 import com.fillyourtote.fillyourtoteserver.dao.CartItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class CartService {
     private final CartItemRepository cartItemRepository;
-    private final ProductService productService; // depends on product service
+    private final ProductService productService;
 
     public CartService(CartItemRepository cartItemRepository, ProductService productService) {
         this.cartItemRepository = cartItemRepository;
@@ -23,6 +26,19 @@ public class CartService {
     @Transactional(readOnly = true)
     public List<CartItem> getAllCartItems() {
         return cartItemRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CartItemDTO> getAllCartItemsDTO() {
+        return cartItemRepository.findAll().stream()
+                .map(CartItemDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public CartSummary getCartSummary() {
+        List<CartItem> cartItems = cartItemRepository.findAll();
+        return new CartSummary(cartItems);
     }
 
     public Optional<CartItem> addToCart(Long productId, Integer quantity) {
