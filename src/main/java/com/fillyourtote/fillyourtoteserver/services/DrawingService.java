@@ -19,15 +19,7 @@ public class DrawingService {
 
     @Transactional(readOnly = true)
     public List<Drawing> findAllDrawings() {
-        System.out.println("=== SERVICE START ===");
-        List<Drawing> result = drawingRepository.findAll();
-        System.out.println("=== SERVICE RECEIVED " + result.size() + " DRAWINGS ===");
-        result.forEach(d ->
-                System.out.println("Service sees: ID=" + d.getId() + ", Name='" + d.getName() + "', Slug='" + d.getSlug() + "'")
-        );
-        System.out.println("=== SERVICE END ===");
-        return result;
-//        return drawingRepository.findAll();
+        return drawingRepository.findAll();
     }
 
     @Transactional(readOnly = true)
