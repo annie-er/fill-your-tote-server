@@ -1,6 +1,8 @@
 package com.fillyourtote.fillyourtoteserver.controllers;
 
 import com.fillyourtote.fillyourtoteserver.entities.CartItem;
+import com.fillyourtote.fillyourtoteserver.entities.CartSummary;
+import com.fillyourtote.fillyourtoteserver.dto.CartItemDTO;
 import com.fillyourtote.fillyourtoteserver.services.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,13 @@ public class CartRestController {
     }
 
     @GetMapping
-    public List<CartItem> getCartItems() {
-        return service.getAllCartItems();
+    public List<CartItemDTO> getCartItems() {
+        return service.getAllCartItemsDTO();
+    }
+
+    @GetMapping("/summary")
+    public CartSummary getCartSummary() {
+        return service.getCartSummary();
     }
 
     @PostMapping("/items")
