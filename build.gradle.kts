@@ -45,3 +45,13 @@ hibernate {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.jar {
+    enabled = false
+    archiveClassifier.set("")
+}
+
+tasks.bootJar {
+    enabled = true
+    archiveClassifier.set("")
+}
