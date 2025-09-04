@@ -10,6 +10,7 @@ build/
 
 webapp_logs.zip
 webapp_logs/
+app.jar
 
 ### STS ###
 .apt_generated
