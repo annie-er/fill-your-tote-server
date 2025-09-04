@@ -48,10 +48,9 @@ tasks.withType<Test> {
 
 tasks.jar {
     enabled = false
-    archiveClassifier.set("")
 }
 
-tasks.bootJar {
-    enabled = true
-    archiveClassifier.set("")
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    archiveFileName.set("app.jar") // final jar name
+    mainClass.set("com.fillyourtote.fillyourtoteserver.FillYourToteServerApplication")
 }
