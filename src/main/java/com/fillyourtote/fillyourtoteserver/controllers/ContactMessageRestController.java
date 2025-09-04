@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contact")
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class ContactMessageRestController {
 
     private final ContactMessageService service;
