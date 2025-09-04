@@ -8,6 +8,9 @@ build/
 /src/main/resources/application-prod.properties
 .DS_Store
 
+webapp_logs.zip
+webapp_logs/
+
 ### STS ###
 .apt_generated
 .classpath
