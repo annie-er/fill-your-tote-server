@@ -42,6 +42,9 @@ public class ContactMessage {
     @Column(length = 2000)
     private String message;
 
+    @Column(length = 500)
+    private String attachmentUrl;
+
     public ContactMessage() {
     }
 
@@ -134,6 +137,9 @@ public class ContactMessage {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getAttachmentUrl() { return attachmentUrl; }
+    public void setAttachmentUrl(String attachmentUrl) { this.attachmentUrl = attachmentUrl; }
 
     @Override
     public boolean equals(Object o) {

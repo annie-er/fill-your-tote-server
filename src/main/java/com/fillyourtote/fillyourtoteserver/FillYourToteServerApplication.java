@@ -7,8 +7,10 @@ import org.springframework.context.annotation.Bean;
 import com.fillyourtote.fillyourtoteserver.dao.ProductRepository;
 import com.fillyourtote.fillyourtoteserver.entities.Product;
 import com.fillyourtote.fillyourtoteserver.services.ProductService;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class FillYourToteServerApplication {
 
     public static void main(String[] args) {
