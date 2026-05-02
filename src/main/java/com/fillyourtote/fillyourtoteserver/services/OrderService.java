@@ -1,14 +1,17 @@
 package com.fillyourtote.fillyourtoteserver.services;
 
+import com.fillyourtote.fillyourtoteserver.dao.UserRepository;
+import com.fillyourtote.fillyourtoteserver.dto.OrderDTO;
+import com.fillyourtote.fillyourtoteserver.dto.OrderItemDTO;
 import com.fillyourtote.fillyourtoteserver.entities.*;
 import com.fillyourtote.fillyourtoteserver.dao.OrderRepository;
+import com.fillyourtote.fillyourtoteserver.security.SecurityContextHelper;
 import com.stripe.model.Charge;
 import com.stripe.model.PaymentIntent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +32,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CartService cartService;
+    private final UserRepository userRepository;
+    private final SecurityContextHelper securityContextHelper;
 
-    public OrderService(OrderRepository orderRepository, CartService cartService) {
+    public OrderService(OrderRepository orderRepository, CartService cartService, UserRepository userRepository,  SecurityContextHelper securityContextHelper) {
         this.orderRepository = orderRepository;
         this.cartService = cartService;
+        this.userRepository = userRepository;
+        this.securityContextHelper = securityContextHelper;
     }
 
     public void createOrderFromIntent(PaymentIntent intent) {
@@ -72,6 +79,7 @@ public class OrderService {
         }
         logger.info("Cart items found: {}", cartItems.size());
 
+        // Don't set user here, since an order could be done through a guest session
         Order order = new Order();
         order.setSessionId(sessionId);
         order.setStripePaymentIntentId(paymentIntentId);
@@ -87,7 +95,7 @@ public class OrderService {
         );
 
         // Save order first so it gets an ID
-        order.setItems(null); // don't set items yet
+        order.setItems(null); // don't set items yet because OrderItems needs the order to set
         orderRepository.save(order);
 
         // Now save items with the persisted order reference
@@ -98,16 +106,38 @@ public class OrderService {
             item.setProductName(ci.getProduct().getName());
             item.setQuantity(ci.getQuantity());
             item.setPriceAtPurchase(ci.getProduct().getPrice());
+            item.setImageUrl(ci.getProduct().getImageUrl());
+            item.setDescription(ci.getProduct().getDescription());
             return item;
         }).collect(Collectors.toList());
 
         order.setItems(items);
-        orderRepository.save(order); // save again with items
 
         if (userIdStr != null && !userIdStr.isBlank()) {
+            userRepository.findById(Long.parseLong(userIdStr))
+                    .ifPresent(order::setUser); // user is present; set the user to the Order here
+            orderRepository.save(order); // save again with items
             cartService.clearCartByUserId(Long.parseLong(userIdStr));
         } else {
+            orderRepository.save(order); // save
             cartService.clearCartBySessionId(sessionId);
         }
+    }
+
+    public List<OrderDTO> getOrdersForCurrentUser() {
+        User user = requireCurrentUser();
+        return orderRepository.findByUserOrderByCreatedAtDesc(user).stream()
+                .map(order -> {
+                    List<OrderItemDTO> itemDTOs = order.getItems().stream()
+                            .map(OrderItemDTO::new)
+                            .toList();
+                    return new OrderDTO(order, itemDTOs);
+                })
+                .toList();
+    }
+
+    private User requireCurrentUser() {
+        return securityContextHelper.getCurrentUser()
+                .orElseThrow(() -> new SecurityException("Authentication required"));
     }
 }

@@ -3,14 +3,11 @@ package com.fillyourtote.fillyourtoteserver.services;
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.sas.BlobSasPermission;
-import com.azure.storage.blob.sas.BlobServiceSasSignatureValues;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,21 +45,6 @@ public class AzureBlobService {
         blobClient.upload(file.getInputStream(), file.getSize(), true);
 
         return blobClient.getBlobUrl();
-    }
-
-    public String generateDownloadUrl(String blobUrl, int expiryMinutes) {
-        String blobName = blobUrl.substring(blobUrl.lastIndexOf('/') + 1);
-
-        BlobClient blobClient = containerClient.getBlobClient(blobName);
-
-        BlobSasPermission permission = new BlobSasPermission().setReadPermission(true);
-        BlobServiceSasSignatureValues sasValues = new BlobServiceSasSignatureValues(
-                OffsetDateTime.now().plusMinutes(expiryMinutes),
-                permission
-        );
-
-        String sasToken = blobClient.generateSas(sasValues);
-        return blobClient.getBlobUrl() + "?" + sasToken;
     }
 
     private void validateFile(MultipartFile file) {

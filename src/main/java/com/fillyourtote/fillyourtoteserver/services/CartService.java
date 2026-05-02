@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -34,7 +33,7 @@ public class CartService {
     public List<CartItemDTO> getAllCartItemsDTO(String guestSessionId) {
         return getCartItems(guestSessionId).stream()
                 .map(CartItemDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Transactional(readOnly = true)
@@ -99,8 +98,6 @@ public class CartService {
             cartItemRepository.deleteByGuestSessionId(guestSessionId);
         }
     }
-
-    // --- helpers ---
 
     private List<CartItem> getCartItems(String guestSessionId) {
         Optional<User> userOpt = securityContextHelper.getCurrentUser();
