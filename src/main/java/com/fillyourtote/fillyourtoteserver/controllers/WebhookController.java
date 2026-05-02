@@ -27,7 +27,7 @@ public class WebhookController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/stripe")
+    @PostMapping
     public ResponseEntity<String> handleStripeWebhook(
             @RequestBody String payload,
             @RequestHeader("Stripe-Signature") String sigHeader) {
@@ -46,7 +46,6 @@ public class WebhookController {
         if ("payment_intent.succeeded".equals(event.getType())) {
             logger.info("Processing payment_intent.succeeded");
 
-            // Replace orElseThrow() with raw JSON deserialization
             PaymentIntent intent = (PaymentIntent) event.getData().getObject();
 
             if (intent == null) {

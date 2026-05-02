@@ -23,26 +23,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO request) {
-//        try {
-//            AuthResponseDTO response = authService.register(request);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO request) {
-//        try {
-//            AuthResponseDTO response = authService.login(request);
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-//        }
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         AuthResponseDTO response = authService.register(request);

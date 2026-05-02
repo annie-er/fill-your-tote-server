@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/contact")
@@ -62,21 +60,6 @@ public class ContactMessageRestController {
     @GetMapping("/{id}")
     public ResponseEntity<ContactMessage> getContactMessage(@PathVariable Long id) {
         return ResponseEntity.of(service.findContactMessageById(id));
-    }
-
-    @GetMapping("/{id}/attachment")
-    public ResponseEntity<Map<String, String>> getAttachmentUrl(@PathVariable Long id) {
-        return service.findContactMessageById(id)
-                .filter(msg -> msg.getAttachmentUrl() != null)
-                .map(msg -> {
-                    String downloadUrl = azureBlobService.generateDownloadUrl(
-                            msg.getAttachmentUrl(), 15
-                    );
-                    Map<String, String> response = new HashMap<>();
-                    response.put("url", downloadUrl);
-                    return ResponseEntity.ok(response);
-                })
-                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

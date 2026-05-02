@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/drawings")
-//@CrossOrigin(origins = "http://localhost:5173")
 public class DrawingRestController {
 
     private final DrawingService service;

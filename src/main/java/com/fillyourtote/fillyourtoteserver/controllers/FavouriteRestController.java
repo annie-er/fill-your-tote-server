@@ -1,8 +1,10 @@
 package com.fillyourtote.fillyourtoteserver.controllers;
 
+import com.fillyourtote.fillyourtoteserver.dto.AddToFavouritesRequest;
 import com.fillyourtote.fillyourtoteserver.dto.FavouriteItemDTO;
 import com.fillyourtote.fillyourtoteserver.entities.FavouriteItem;
 import com.fillyourtote.fillyourtoteserver.services.FavouriteService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,22 +29,21 @@ public class FavouriteRestController {
     }
 
     @PostMapping("/items")
-    public ResponseEntity<FavouriteItem> addToFavourites(@RequestBody Map<String, Object> request) {
-        Long productId = Long.valueOf(request.get("productId").toString());
+    public ResponseEntity<FavouriteItemDTO> addToFavourites(@RequestBody @Valid AddToFavouritesRequest request) {
 
-        return service.addToFavourites(productId)
+        return service.addToFavourites(request.getProductId())
                 .map(item -> {
                     URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                             .path("/{id}")
                             .buildAndExpand(item.getId())
                             .toUri();
-                    return ResponseEntity.created(location).body(item);
+                    return ResponseEntity.created(location).body(new FavouriteItemDTO(item));
                 })
                 .orElse(ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/items/{itemId}")
-    public ResponseEntity<?> removeFromFavourites(@PathVariable Long itemId) {
+    public ResponseEntity<Void> removeFromFavourites(@PathVariable Long itemId) {
         if (service.removeFromFavourites(itemId)) {
             return ResponseEntity.noContent().build();
         }
@@ -50,7 +51,7 @@ public class FavouriteRestController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> clearFavourites() {
+    public ResponseEntity<Void> clearFavourites() {
         service.clearFavourites();
         return ResponseEntity.noContent().build();
     }
