@@ -7,10 +7,6 @@ import jakarta.validation.constraints.Size;
 
 public class RegisterRequestDTO {
 
-//    @NotBlank
-//    @Size(min = 3, max = 50)
-//    private String username;
-
     @NotBlank
     private String firstName;
 
@@ -24,9 +20,6 @@ public class RegisterRequestDTO {
     @NotBlank
     @Size(min = 8, max = 100)
     private String password;
-
-//    public String getUsername() { return username; }
-//    public void setUsername(String username) { this.username = username; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

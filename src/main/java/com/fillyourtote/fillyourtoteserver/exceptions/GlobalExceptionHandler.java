@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
         return buildError(HttpStatus.UNAUTHORIZED, "Invalid email or password");
     }
 
-    // Bonus — handle other authentication failures you may want later
+    // Handle other authentication failures
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<Map<String, String>> handleDisabled(DisabledException ex) {
         return buildError(HttpStatus.UNAUTHORIZED, "Account is disabled");

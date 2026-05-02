@@ -15,10 +15,23 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    @Column(nullable = false)
     private Long productId;
+
+    @Column(nullable = false)
     private String productName;
+
+    @Column(nullable = false)
     private int quantity;
+
+    @Column(nullable = false)
     private BigDecimal priceAtPurchase;
+
+    @Column(length = 255)
+    private String imageUrl;
+
+    @Column(length = 500)
+    private String description;
 
     // Getters and setters
     public Long getId() { return id; }
@@ -37,4 +50,10 @@ public class OrderItem {
 
     public BigDecimal getPriceAtPurchase() { return priceAtPurchase; }
     public void setPriceAtPurchase(BigDecimal priceAtPurchase) { this.priceAtPurchase = priceAtPurchase; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 }

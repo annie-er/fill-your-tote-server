@@ -72,16 +72,17 @@ public class SecurityConfig {
                         // Cart: all operations permitted (guest + user handled in service layer)
                         .requestMatchers("/cart/**").permitAll()
 
-                        // Favourites: must be authenticated
+                        // Favourites & Orders: must be authenticated
                         .requestMatchers("/favourites/**").authenticated()
+                        .requestMatchers("/orders/**").authenticated()
 
-                        .requestMatchers(HttpMethod.POST, "/webhook/stripe").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/webhook/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/payment/**").permitAll()
 
                         .requestMatchers("/actuator/health").permitAll()
 
-                        .anyRequest().authenticated() // always last
+                        .anyRequest().authenticated() // last
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
