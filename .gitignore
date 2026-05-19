@@ -7,6 +7,7 @@ build/
 /src/main/resources/application.properties
 /src/main/resources/application-prod.properties
 .DS_Store
+src/main/resources/static
 
 webapp_logs.zip
 webapp_logs/
