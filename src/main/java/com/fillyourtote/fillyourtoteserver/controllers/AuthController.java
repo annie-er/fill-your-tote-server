@@ -24,8 +24,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
-        AuthResponseDTO response = authService.register(request);
+    public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request, HttpServletRequest httpRequest) {
+        String guestSessionId = extractGuestSessionId(httpRequest);
+        AuthResponseDTO response = authService.register(request, guestSessionId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
